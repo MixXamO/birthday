@@ -520,7 +520,7 @@
         
         <div id="invitation">
             <div class="invitation-content">
-                <h1>🎉 Отлично! 🎉</h1>
+                <h1>🎉 Круто типо! 🎉</h1>
                 <p>Ты заслужил(а) приглашение!</p>
                 
                 <div class="result-info" id="resultInfo">
@@ -547,7 +547,7 @@
                     </button>
                 </div>
             </div>
-</div>
+        </div>
     </div>
 
     <script>
@@ -588,13 +588,13 @@
             updateGameObjects();
         }
         
-        // Игрок
+        // Игрок - ПРОСТОЙ и СИМПАТИЧНЫЙ
         let player = {
             x: 50,
             y: 0,
-            width: 40, // Увеличим ширину для красивого персонажа
-            height: 60, // Увеличим высоту
-            color: '#4CAF50',
+            width: 35, // Компактный размер
+            height: 50,
+            color: '#FF6B6B', // Приятный красный
             velocityX: 0,
             velocityY: 0,
             isJumping: false,
@@ -612,8 +612,8 @@
             // Начальная позиция игрока
             player.x = 50;
             player.y = canvas.height - 100;
-            player.width = Math.max(35, 40 * (canvas.width / 800));
-            player.height = Math.max(50, 60 * (canvas.height / 400));
+            player.width = Math.max(30, 35 * (canvas.width / 800));
+            player.height = Math.max(45, 50 * (canvas.height / 400));
             
             // Платформы
             platforms = [
@@ -811,7 +811,7 @@
         // Инициализируем управление
         setupTouchControls();
         
-        // Отрисовка игрока - КРАСИВЫЙ КОТИК
+        // Отрисовка игрока - ПРОСТОЙ и СИМПАТИЧНЫЙ
         function drawPlayer() {
             const centerX = player.x + player.width / 2;
             const centerY = player.y + player.height / 2;
@@ -828,315 +828,129 @@
                 ctx.scale(-1, 1);
             }
             
-            // Тело котика (основной овал)
-            ctx.fillStyle = '#FF6B9D'; // Розовый цвет
+            // Тело (простой прямоугольник с закруглёнными углами)
+            ctx.fillStyle = player.color;
             ctx.beginPath();
-            ctx.ellipse(
-                player.direction === 1 ? centerX : centerX,
-                centerY,
+            ctx.roundRect(
+                player.x,
+                player.y,
+                player.width,
+                player.height,
+                10
+            );
+            ctx.fill();
+            
+            // Голова (круг сверху)
+            ctx.fillStyle = player.color;
+            ctx.beginPath();
+            ctx.arc(
+                centerX,
+                player.y + 15,
                 player.width / 2.5,
-                player.height / 2.2,
-                0, 0, Math.PI * 2
-            );
-            ctx.fill();
-            
-            // Животик (более светлый овал)
-            ctx.fillStyle = '#FFB6C1';
-            ctx.beginPath();
-            ctx.ellipse(
-                player.direction === 1 ? centerX : centerX,
-                centerY + 5,
-                player.width / 3.5,
-                player.height / 3,
-                0, 0, Math.PI * 2
-            );
-            ctx.fill();
-            
-            // Голова (круг)
-            ctx.fillStyle = '#FF6B9D';
-            ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX : centerX,
-                player.y + player.height * 0.35,
-                player.width / 3,
                 0, Math.PI * 2
             );
             ctx.fill();
             
-            // Уши
-            ctx.fillStyle = '#FF6B9D';
-            // Левое ухо
-            ctx.beginPath();
-            ctx.moveTo(
-                player.direction === 1 ? centerX - player.width / 4 : centerX - player.width / 4,
-                player.y + player.height * 0.25
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX - player.width / 6 : centerX - player.width / 6,
-                player.y + player.height * 0.1
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX - player.width / 8 : centerX - player.width / 8,
-                player.y + player.height * 0.25
-            );
-            ctx.fill();
+            // Глаза (два круга)
+            const eyeSize = player.width / 8;
+            const eyeY = player.y + 12;
+            const leftEyeX = centerX - player.width / 6;
+            const rightEyeX = centerX + player.width / 6;
             
-            // Правое ухо
-            ctx.beginPath();
-            ctx.moveTo(
-                player.direction === 1 ? centerX + player.width / 4 : centerX + player.width / 4,
-                player.y + player.height * 0.25
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX + player.width / 6 : centerX + player.width / 6,
-                player.y + player.height * 0.1
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX + player.width / 8 : centerX + player.width / 8,
-                player.y + player.height * 0.25
-            );
-            ctx.fill();
-            
-            // Внутренняя часть ушей
-            ctx.fillStyle = '#FFB6C1';
-            // Левое ухо внутри
-            ctx.beginPath();
-            ctx.moveTo(
-                player.direction === 1 ? centerX - player.width / 4.5 : centerX - player.width / 4.5,
-                player.y + player.height * 0.23
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX - player.width / 7 : centerX - player.width / 7,
-                player.y + player.height * 0.13
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX - player.width / 10 : centerX - player.width / 10,
-                player.y + player.height * 0.23
-            );
-            ctx.fill();
-            
-            // Правое ухо внутри
-            ctx.beginPath();
-            ctx.moveTo(
-                player.direction === 1 ? centerX + player.width / 4.5 : centerX + player.width / 4.5,
-                player.y + player.height * 0.23
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX + player.width / 7 : centerX + player.width / 7,
-                player.y + player.height * 0.13
-            );
-            ctx.lineTo(
-                player.direction === 1 ? centerX + player.width / 10 : centerX + player.width / 10,
-                player.y + player.height * 0.23
-            );
-            ctx.fill();
-            
-            // Глаза
+            // Белки глаз
             ctx.fillStyle = 'white';
-            // Левый глаз
             ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX - player.width / 6 : centerX - player.width / 6,
-                player.y + player.height * 0.35,
-                player.width / 8,
-                0, Math.PI * 2
-            );
+            ctx.arc(leftEyeX, eyeY, eyeSize, 0, Math.PI * 2);
             ctx.fill();
             
-            // Правый глаз
             ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX + player.width / 6 : centerX + player.width / 6,
-                player.y + player.height * 0.35,
-                player.width / 8,
-                0, Math.PI * 2
-            );
+            ctx.arc(rightEyeX, eyeY, eyeSize, 0, Math.PI * 2);
             ctx.fill();
             
             // Зрачки
-            ctx.fillStyle = '#4A235A'; // Фиолетовый
-            // Левый зрачок
+            ctx.fillStyle = '#333';
+            const pupilSize = eyeSize / 2;
             ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX - player.width / 6 : centerX - player.width / 6,
-                player.y + player.height * 0.35,
-                player.width / 16,
-                0, Math.PI * 2
-            );
+            ctx.arc(leftEyeX, eyeY, pupilSize, 0, Math.PI * 2);
             ctx.fill();
             
-            // Правый зрачок
             ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX + player.width / 6 : centerX + player.width / 6,
-                player.y + player.height * 0.35,
-                player.width / 16,
-                0, Math.PI * 2
-            );
+            ctx.arc(rightEyeX, eyeY, pupilSize, 0, Math.PI * 2);
             ctx.fill();
             
-            // Блеск в глазах
-            ctx.fillStyle = 'white';
-            // Левый блеск
-            ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX - player.width / 7 : centerX - player.width / 7,
-                player.y + player.height * 0.33,
-                player.width / 24,
-                0, Math.PI * 2
-            );
-            ctx.fill();
-            
-            // Правый блеск
-            ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX + player.width / 5.5 : centerX + player.width / 5.5,
-                player.y + player.height * 0.33,
-                player.width / 24,
-                0, Math.PI * 2
-            );
-            ctx.fill();
-            
-            // Носик
-            ctx.fillStyle = '#FF1493'; // Ярко-розовый
-            ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX : centerX,
-                player.y + player.height * 0.42,
-                player.width / 12,
-                0, Math.PI * 2
-            );
-            ctx.fill();
-            
-            // Улыбка
-            ctx.strokeStyle = '#FF1493';
+            // Улыбка (простая дуга)
+            ctx.strokeStyle = '#333';
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.arc(
-                player.direction === 1 ? centerX : centerX,
-                player.y + player.height * 0.48,
-                player.width / 6,
+                centerX,
+                player.y + 25,
+                player.width / 4,
                 0.2, Math.PI * 0.8
             );
             ctx.stroke();
             
-            // Усы (6 усов)
-            ctx.strokeStyle = '#4A235A';
-            ctx.lineWidth = 1.5;
+            // Руки (два прямоугольника по бокам)
+            const armWidth = player.width / 4;
+            const armHeight = player.height / 3;
             
-            // Левые усы
-            for (let i = 0; i < 3; i++) {
-                ctx.beginPath();
-                ctx.moveTo(
-                    player.direction === 1 ? centerX - player.width / 12 : centerX - player.width / 12,
-                    player.y + player.height * 0.43 + i * 5
-                );
-                ctx.lineTo(
-                    player.direction === 1 ? centerX - player.width / 3 : centerX - player.width / 3,
-                    player.y + player.height * 0.43 + i * 5
-                );
-                ctx.stroke();
-            }
-            
-            // Правые усы
-            for (let i = 0; i < 3; i++) {
-                ctx.beginPath();
-                ctx.moveTo(
-                    player.direction === 1 ? centerX + player.width / 12 : centerX + player.width / 12,
-                    player.y + player.height * 0.43 + i * 5
-                );
-                ctx.lineTo(
-                    player.direction === 1 ? centerX + player.width / 3 : centerX + player.width / 3,
-                    player.y + player.height * 0.43 + i * 5
-                );
-                ctx.stroke();
-            }
-            
-            // Лапки
-            ctx.fillStyle = '#FF6B9D';
-            
-            // Передние лапки
-            // Левая передняя
-            ctx.beginPath();
-            ctx.ellipse(
-                player.direction === 1 ? centerX - player.width / 3.5 : centerX - player.width / 3.5,
-                player.y + player.height * 0.75,
-                player.width / 8,
-                player.height / 8,
-                0, 0, Math.PI * 2
+            // Левая рука
+            ctx.fillStyle = player.color;
+            ctx.fillRect(
+                player.x - armWidth + 5,
+                player.y + player.height / 3,
+                armWidth,
+                armHeight
             );
-            ctx.fill();
             
-            // Правая передняя
-            ctx.beginPath();
-            ctx.ellipse(
-                player.direction === 1 ? centerX + player.width / 3.5 : centerX + player.width / 3.5,
-                player.y + player.height * 0.75,
-                player.width / 8,
-                player.height / 8,
-                0, 0, Math.PI * 2
+            // Правая рука
+            ctx.fillStyle = player.color;
+            ctx.fillRect(
+                player.x + player.width - 5,
+                player.y + player.height / 3,
+                armWidth,
+                armHeight
             );
-            ctx.fill();
             
-            // Задние лапки (немного ниже)
-            // Левая задняя
-            ctx.beginPath();
-            ctx.ellipse(
-                player.direction === 1 ? centerX - player.width / 4 : centerX - player.width / 4,
-                player.y + player.height * 0.9,
-                player.width / 7,
-                player.height / 6,
-                0, 0, Math.PI * 2
-            );
-            ctx.fill();
+            // Ноги (два прямоугольника снизу)
+            const legWidth = player.width / 3;
+            const legHeight = player.height / 4;
             
-            // Правая задняя
-            ctx.beginPath();
-            ctx.ellipse(
-                player.direction === 1 ? centerX + player.width / 4 : centerX + player.width / 4,
-                player.y + player.height * 0.9,
-                player.width / 7,
-                player.height / 6,
-                0, 0, Math.PI * 2
+            // Левая нога
+            ctx.fillStyle = player.color;
+            ctx.fillRect(
+                player.x + player.width / 4 - legWidth / 2,
+                player.y + player.height,
+                legWidth,
+                legHeight
             );
-            ctx.fill();
             
-            // Хвост (пушистый)
-            ctx.fillStyle = '#FF6B9D';
-            ctx.beginPath();
-            ctx.moveTo(
-                player.direction === 1 ? centerX + player.width / 2.5 : centerX + player.width / 2.5,
-                centerY
+            // Правая нога
+            ctx.fillStyle = player.color;
+            ctx.fillRect(
+                player.x + 3 * player.width / 4 - legWidth / 2,
+                player.y + player.height,
+                legWidth,
+                legHeight
             );
-            // Рисуем волнистый хвост
-            for (let i = 0; i <= 10; i++) {
-                const angle = (i / 10) * Math.PI / 2;
-                const radius = player.width / 4 + Math.sin(i * 0.8) * 5;
-                const x = player.direction === 1 ? 
-                    centerX + player.width / 2.5 + Math.cos(angle) * radius :
-                    centerX + player.width / 2.5 + Math.cos(angle) * radius;
-                const y = centerY - Math.sin(angle) * radius;
-                
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
-            ctx.fill();
-            
-            // Кончик хвоста (белый)
-            ctx.fillStyle = '#FFB6C1';
-            ctx.beginPath();
-            ctx.arc(
-                player.direction === 1 ? centerX + player.width / 2.5 + player.width / 4 : centerX + player.width / 2.5 + player.width / 4,
-                centerY - player.width / 4,
-                player.width / 10,
-                0, Math.PI * 2
-            );
-            ctx.fill();
             
             ctx.restore();
+        }
+        
+        // Полифилл для roundRect если не поддерживается
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                if (width < 2 * radius) radius = width / 2;
+                if (height < 2 * radius) radius = height / 2;
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.arcTo(x + width, y, x + width, y + height, radius);
+                this.arcTo(x + width, y + height, x, y + height, radius);
+                this.arcTo(x, y + height, x, y, radius);
+                this.arcTo(x, y, x + width, y, radius);
+                this.closePath();
+                return this;
+            }
         }
         
         function drawPlatforms() {
@@ -1355,8 +1169,8 @@
                 <p><strong>Итог игры:</strong> ${isWin ? '🎉 Победа!' : '⏰ Время вышло!'}</p>
                 <p>🎁 Собрано подарков: ${player.giftsCollected}/5</p>
                 <p>⏱️ Осталось времени: ${timeLeft} сек</p>
-                ${isWin ? '<p>✨ Ты молодец! Вот твоё приглашение ниже! 👇</p>' : 
-                         '<p>😅 Попробуй ещё раз, у тебя получится!</p>'}
+                ${isWin ? '<p>✨ Ты заслужил(а)! Вот твоё приглашение ниже! 👇</p>' : 
+                         '<p>😅 Попробуй ещё раз, у тебя возможно получится!</p>'}
             `;
             
             // Показываем приглашение
@@ -1423,7 +1237,7 @@
         restartBtn.addEventListener('click', startGame);
         
         rsvpBtn.addEventListener('click', () => {
-            alert('🎉 Супер! Жду тебя на празднике! Обязательно скину подробности позже в лс. 😊\n\nА пока можешь оценить моё приглашение!');
+            alert('🎉 Йоу! Жду тебя на празднике! Обязательно скину подробности позже в лс. 😊\n\nА пока можешь оценить моё приглашение!');
         });
         
         // Предотвращаем стандартные жесты
